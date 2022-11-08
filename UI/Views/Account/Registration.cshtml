@@ -1,0 +1,37 @@
+﻿@model Models.ViewModels.RegistrationViewModel
+@{
+    ViewBag.TitlePage = @Localizer["TitlePage"];
+}
+
+@using (Html.BeginForm("Registration", "Account", FormMethod.Post))
+{
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-field">
+        <label asp-for="Email" for="exampleInputEmail1" class="form-label"></label>
+        <input asp-for="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    </div>
+    <div class="form-field">
+        <label asp-for="Password" for="exampleInputPassword1" class="form-label"></label>
+        <input asp-for="Password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="form-field">
+        <label asp-for="PasswordConfirm" for="exampleInputPassword1" class="form-label"></label>
+        <input asp-for="PasswordConfirm" class="form-control" id="exampleInputPassword1"> 
+    </div>
+    <div class="form-field">
+        <label asp-for="Name" for="exampleInputPassword1" class="form-label"></label>
+        <input asp-for="Name" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="form-field">
+        <label asp-for="LastName" for="exampleInputPassword1" class="form-label"></label>
+        <input asp-for="LastName" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="form-field">
+        <label asp-for="PhoneNumber" for="exampleInputPassword1" class="form-label"></label>
+        <input asp-for="PhoneNumber" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="form-field">
+        <button type="submit" class="btn btn-primary">@SharedLocalizer["SubmitButonInForm"]</button>
+    </div>  
+}

@@ -1,0 +1,15 @@
+﻿global using DataAccessLayer.EF;
+global using Microsoft.EntityFrameworkCore;
+global using System.Globalization;
+global using NLog.Web;
+global using UI;
+global using Microsoft.AspNetCore.Localization;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Authentication.Cookies;
+global using Microsoft.AspNetCore.Authentication;
+global using DataAccessLayer.Interfaces;
+global using DataAccessLayer.Repositories;
+global using Models.Entities;
+global using BusinessLogic.Implemantations;
+global using BusinessLogic.Interfaces;
+global using Models.ViewModels;

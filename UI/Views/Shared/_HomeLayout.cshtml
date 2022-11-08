@@ -1,0 +1,95 @@
+﻿@{
+    string returnUrl = ViewContext.HttpContext.Request.Path;
+ 
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" >
+    <link href="~/css/Style.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/FormField.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/" >Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span> 
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    @if(User.IsInRole("User"))
+                    {
+                        <li class="nav-item">
+                            @*<a class="nav-link" asp-action="Service" asp-controller="Home">@SharedLocalizer["NavBarAppointmentCreateButton"]</a>*@
+                        </li>
+                    }
+                    else if(User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="AdminPanel" asp-controller="Admin">@SharedLocalizer["NavBarAdminPanelButton"]</a>
+                        </li>   
+                    }
+                        else if (User.IsInRole("Deliveryman"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="ManagePanel" asp-controller="Deliveryman">@SharedLocalizer["NavBarManagePanelButton"]</a>
+                        </li>
+                    }
+
+                    @if(User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Profile" asp-controller="Account">@SharedLocalizer["NavBarProfileButton"]</a>
+                        </li>             
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Logout" asp-controller="Account">@SharedLocalizer["NavBarLogoutButton"]</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Registration" asp-controller="Account">@SharedLocalizer["NavBarRegistretionButton"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Login" asp-controller="Account">@SharedLocalizer["NavBarLoginButton"]</a>
+                        </li>                  
+                    }
+
+                    <li class="nav-item">
+                        <form asp-action="ChangeLanguage" asp-controller="Language" method="post">
+                            <input type="hidden" id="returnUrl" name="returnUrl" value="@returnUrl" />
+ 
+                                <select id="culture"
+                                    name="culture"
+                                    class="form-control"
+                                    onchange="this.form.submit();"
+                                    asp-items="cultureItems"
+                                    asp-for="@requestCulture.RequestCulture.UICulture.Name">
+                                </select>
+                            </form>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </nav>
+    </header>
+    @RenderBody()
+    <footer>
+            <p>&copy; asassaGoose</p>
+    </footer>    
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/jquery/jquery-3.6.1.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

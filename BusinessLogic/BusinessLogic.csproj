@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<UserSecretsId>115bdcb5-c93c-4198-ab70-b9fc5615665f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="3.4.2" />
+    <PackageReference Include="NLog" Version="5.0.5" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.1.0" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
+
+</Project>
