@@ -4,5 +4,9 @@
     {
         Task<BaseResponse<ClaimsIdentity>> Registration(RegistrationViewModel model);
         Task<BaseResponse<ClaimsIdentity>> Login(LoginViewModel model);
+        Task<BaseResponse<Account>> GetUserByEmail(string email);
+        Task<BaseResponse<Account>> GetUserById(ulong id);
+        Task<BaseResponse<bool>> ResetPassword(ulong id, string password);
+        Task<BaseResponse<bool>> ConfirmEmailAsync(ulong id, string key);
     }
 }

@@ -3,18 +3,16 @@ using MailKit.Net.Smtp;
 
 namespace BusinessLogic.Implemantations
 {
-    public class MailService
+    public class MailService : IMailService
     {
-        private readonly IConfiguration _configuration;
         private readonly ILogger<MailService> _loger;
         private readonly string _from = "pizzalog711@gmail.com";
         private readonly string _token;
 
         public MailService(IConfiguration configuration, ILogger<MailService> logger)
-        {
-            _configuration = configuration;
+        {       
             _loger = logger;
-            _token = _configuration.GetValue<string>("TokenMailService");
+            _token = configuration.GetValue<string>("TokenMailService");
         }
 
         public async Task SendEmailAsync(string email, string subject, string message)
@@ -31,10 +29,10 @@ namespace BusinessLogic.Implemantations
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("smtp.gmail.com", 587, true);
+                await client.ConnectAsync("smtp.gmail.com", 465, true);
                 await client.AuthenticateAsync(_from, _token);
                 await client.SendAsync(emailMessage);
-
+                
                 await client.DisconnectAsync(true);
             }
         }

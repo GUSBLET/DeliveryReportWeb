@@ -9,7 +9,7 @@
         public static void InitializeServices(this IServiceCollection services)
         {
             services.AddScoped<IAccountService, AccountService>();
-            services.AddTransient<MailService>();
+            services.AddTransient<IMailService, MailService>();
         }
 
     }

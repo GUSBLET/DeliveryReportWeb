@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-
-namespace DataAccessLayer.EF
+﻿namespace DataAccessLayer.EF
 {
     public class ApplicationDbContext : DbContext
     {
@@ -14,10 +12,11 @@ namespace DataAccessLayer.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Account>(buildAction =>
             {
                 buildAction.ToTable("TableAccountUsers")
-                    .HasKey(x => x.Id);  
+                    .HasKey(x => x.Id);
                 buildAction.Property(x => x.Id)
                     .ValueGeneratedOnAdd();
                 buildAction.Property(x => x.Email)
@@ -30,6 +29,9 @@ namespace DataAccessLayer.EF
                     .IsRequired(false);
                 buildAction.Property(x => x.PhoneNumber)
                     .IsRequired(false);
+                buildAction.Property(x => x.EmailConfirmed);
+                buildAction.Property(x => x.EmailConfirmedToken)
+                    .IsRequired();
                 buildAction.Property(x => x.Role)
                     .IsRequired();
 
@@ -41,6 +43,8 @@ namespace DataAccessLayer.EF
                     Name = "Denis",
                     LastName = "Chykalov",
                     PhoneNumber = "+ 49 151",
+                    EmailConfirmed = true,
+                    EmailConfirmedToken = Guid.NewGuid(),
                     Role = Models.Enums.Role.Admin
                 });
             });

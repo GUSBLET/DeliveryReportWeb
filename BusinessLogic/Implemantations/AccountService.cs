@@ -1,4 +1,6 @@
-﻿namespace BusinessLogic.Implemantations
+﻿using System;
+
+namespace BusinessLogic.Implemantations
 {
     public class AccountService : IAccountService
     {
@@ -9,6 +11,76 @@
         {
             _logger = logger;
             _userRepository = userRepository;
+        }
+
+        public async Task<BaseResponse<bool>> ConfirmEmailAsync(ulong id, string key)
+        {
+            var user = GetUserById(id).Result.Data;
+            if(user == null) 
+            { 
+                return new BaseResponse<bool>
+                {
+                    Data = false
+                };
+            }
+            if(id == user.Id && key == user.EmailConfirmedToken.ToString())
+            {
+                user.EmailConfirmed = true;
+                _userRepository.Update(user);
+                return new BaseResponse<bool>
+                {
+                    Data = true
+                };
+            }
+            return new BaseResponse<bool>
+            {
+                Data = false
+            };
+
+        }
+
+        public async Task<BaseResponse<Account>> GetUserByEmail(string email)
+        {
+            var result = await (from p in _userRepository.Select()
+                                where p.Email == email
+                                select new Account
+                                {
+                                    Id = p.Id,
+                                    Email = p.Email,
+                                    Password = p.Password,
+                                    Name = p.Name,
+                                    LastName = p.LastName,
+                                    PhoneNumber = p.PhoneNumber,
+                                    Role = p.Role,
+                                    EmailConfirmed = p.EmailConfirmed,
+                                    EmailConfirmedToken = p.EmailConfirmedToken
+                                }).FirstOrDefaultAsync();
+            return new BaseResponse<Account>
+            {
+                Data = result
+            };            
+        }
+
+        public async Task<BaseResponse<Account>> GetUserById(ulong id)
+        {
+            var result = await(from p in _userRepository.Select()
+                               where p.Id == id
+                               select new Account
+                               {
+                                   Id = p.Id,
+                                   Email = p.Email,
+                                   Password = p.Password,
+                                   Name = p.Name,
+                                   LastName = p.LastName,
+                                   PhoneNumber = p.PhoneNumber,
+                                   Role = p.Role,
+                                   EmailConfirmed = p.EmailConfirmed,
+                                   EmailConfirmedToken = p.EmailConfirmedToken
+                               }).FirstOrDefaultAsync();
+            return new BaseResponse<Account>
+            {
+                Data = result
+            };
         }
 
         public async Task<BaseResponse<ClaimsIdentity>> Login(LoginViewModel model)
@@ -29,21 +101,28 @@
                     {
                         Description = "User not found"
                     };
-
-                if (user.Password == HashPasswordHelper.HashPassowrd(model.Password))
+                if (!user.EmailConfirmed)
                 {
-                    var result = Authenticate(user);
+                    if (user.Password == HashPasswordHelper.HashPassowrd(model.Password))
+                    {
+                        var result = Authenticate(user);
+                        return new BaseResponse<ClaimsIdentity>()
+                        {
+                            Data = result,
+                            StatusCode = HttpStatusCode.OK
+                        };
+
+                    }
                     return new BaseResponse<ClaimsIdentity>()
                     {
-                        Data = result,
-                        StatusCode = HttpStatusCode.OK
+                        Description = "Password is wrong"
                     };
-
                 }
-                return new BaseResponse<ClaimsIdentity>()
-                {
-                    Description = "Password is wrong"
-                };
+                else
+                    return new BaseResponse<ClaimsIdentity>()
+                    {
+                        Description = "Email didn't confirm"
+                    };
             }
             catch(Exception ex) 
             {
@@ -78,7 +157,9 @@
                             Password = HashPasswordHelper.HashPassowrd(model.Password),
                             Name = model.Name,
                             LastName = model.LastName,
-                            PhoneNumber = model.PhoneNumber
+                            PhoneNumber = model.PhoneNumber,
+                            EmailConfirmedToken = Guid.NewGuid(),
+                            EmailConfirmed = false
                         };
                             
                         if(await _userRepository.Add(account)) 
@@ -115,6 +196,62 @@
                 };
             }
         }
+
+        public async Task<BaseResponse<bool>> ResetPassword(ulong id , string password)
+        {
+            try
+            {
+                var user = GetUserById(id).Result.Data;
+                if (user == null)
+                {
+                    return new BaseResponse<bool>
+                    {
+                        Data = false,
+                        StatusCode = HttpStatusCode.InternalServerError
+                    };
+                }
+                if (user.Password == password)
+                    return new BaseResponse<bool>
+                    {
+                        Data = false,
+                        Description = "New password is very similar",
+                        StatusCode = HttpStatusCode.InternalServerError
+
+                    };
+                if(MaskPassword(password))
+                {
+                    if (id == user.Id)
+                    {
+
+                        user.Password = HashPasswordHelper.HashPassowrd(password);
+                        _userRepository.Update(user);
+                        return new BaseResponse<bool>
+                        {
+                            Data = true,
+                            StatusCode = HttpStatusCode.OK,
+                            Description = "Password must have numbers and latin letters"
+                        };
+                    }
+                }
+                return new BaseResponse<bool>
+                {
+                    Data = false,
+                    Description = "User not found",
+                    StatusCode = HttpStatusCode.InternalServerError
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[Login]: {ex.Message}");
+                return new BaseResponse<bool>
+                {
+                    Data = false,
+                    Description = ex.Message,
+                    StatusCode = HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
         private ClaimsIdentity Authenticate(Account user)
         {
             var claims = new List<Claim>
@@ -139,5 +276,7 @@
                 return true;
             return false;
         }
+    
+    
     }
 }
