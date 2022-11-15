@@ -1,7 +1,12 @@
 ﻿namespace Models.ViewModels
 {
-    public class AccountViewModels
+    public class AccountProfileViewModels
     {
+        public string Email { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
+        public Role Role { get; set; }
     }
 
     public class LoginViewModel

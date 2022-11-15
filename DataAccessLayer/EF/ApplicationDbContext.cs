@@ -38,11 +38,11 @@
                 buildAction.HasData(new Account
                 {
                     Id = 1,
-                    Email = "Admin@webqueue.com",
+                    Email = "pizzalog711@gmail.com",
                     Password = HashPasswordHelper.HashPassowrd("12345678"),
                     Name = "Denis",
                     LastName = "Chykalov",
-                    PhoneNumber = "+ 49 151",
+                    PhoneNumber = "+380 50 268 9846",
                     EmailConfirmed = true,
                     EmailConfirmedToken = Guid.NewGuid(),
                     Role = Models.Enums.Role.Admin

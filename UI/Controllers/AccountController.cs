@@ -93,8 +93,12 @@ namespace UI.Controllers
             if(ModelState.IsValid) 
             {
                 var user = _accountService.GetUserByEmail(model.Email);
-                if (user.Result.Data == null)
+                if (user.Result.Data == null || user.Result.Data.Email != User.Identity.Name)
+                {
                     return View(model);
+                    ModelState.AddModelError("", user.Result.Description);
+                }
+                    
                     
                 string emailConfirmationUrl = Url.Action(
                     "ResetPassword",
@@ -164,6 +168,21 @@ namespace UI.Controllers
                 return RedirectToAction("Login", "Account");
             else
                 return View("Error");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var model = await _accountService.GetUserByEmail(User.Identity.Name);
+            var user = new AccountProfileViewModels
+            {
+                Email = model.Data.Email,
+                Name = model.Data.Name,
+                LastName = model.Data.LastName,
+                PhoneNumber = model.Data.PhoneNumber,
+                Role = model.Data.Role
+            };
+            return View(user);
         }
     }
 }
