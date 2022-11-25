@@ -12,10 +12,31 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" >
-    <link href="~/css/Style.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/FormField.css" rel="stylesheet" type="text/css" />
-    <link href="~/css/Profile.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/bootstrap/css/bootstrap.css type="text/css" rel="stylesheet" >
+    <link href="~/css/Style.css" rel="stylesheet" type="text/css" type="text/css"/>
+    <link href="~/css/FormField.css" rel="stylesheet" type="text/css" type="text/css" />
+    <link href="~/css/Profile.css" rel="stylesheet" type="text/css" type="text/css" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" type="text/css" rel='stylesheet' />
+    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" type="text/css" rel='stylesheet' />
+
+    <script defer src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+
+    <!-- Required for using jQuery input mask plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js">
+    </script>
+    
+
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button{
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -34,16 +55,32 @@
                             @*<a class="nav-link" asp-action="Service" asp-controller="Home">@SharedLocalizer["NavBarAppointmentCreateButton"]</a>*@
                         </li>
                     }
-                    else if(User.IsInRole("Admin"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="AdminPanel" asp-controller="Admin">@SharedLocalizer["NavBarAdminPanelButton"]</a>
-                        </li>   
+                    else if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {  
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @SharedLocalizer["NavBarAdminPanelDropDown"]
+                            </a>
+                            <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-action="ControlReportsViewPage" asp-controller="ReportPanel">@SharedLocalizer["NavBarAdminPanelDropDownButtonCheckReport"]</a></li>
+                                    <li><a class="dropdown-item" asp-action="UserManagement" asp-controller="AdminPanel">@SharedLocalizer["NavBarAdminPanelDropDownButtonUserManagement"]</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
                     }
-                        else if (User.IsInRole("Deliveryman"))
+                    else if (User.IsInRole("Deliveryman"))
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="ManagePanel" asp-controller="Deliveryman">@SharedLocalizer["NavBarManagePanelButton"]</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @SharedLocalizer["NavBarReportPanelDropDown"]
+                            </a>
+                            <ul class="dropdown-menu">
+                                    <li><a class="nav-link" asp-action="CreateReport" asp-controller="ReportPanel">@SharedLocalizer["NavBarCreateReportButton"]</a></li>
+                                    <li><a class="nav-link" asp-action="DelivarymanReportsViewPage" asp-controller="ReportPanel">@SharedLocalizer["NavBarViewingReportsPanelButton"]</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
                         </li>
                     }
 
@@ -65,7 +102,6 @@
                             <a class="nav-link" asp-action="Login" asp-controller="Account">@SharedLocalizer["NavBarLoginButton"]</a>
                         </li>                  
                     }
-
                     <li class="nav-item">
                         <form asp-action="ChangeLanguage" asp-controller="Language" method="post">
                             <input type="hidden" id="returnUrl" name="returnUrl" value="@returnUrl" />
@@ -79,18 +115,38 @@
                                 </select>
                             </form>
                         </li>
-                    </ul>
-                    
+                    </ul>                    
                 </div>
             </div>
         </nav>
     </header>
-    @RenderBody()
-    <footer>
-            
-    </footer>    
+    <main>
+        @RenderBody()
+    </main>
+    
+    @*Modal window*@
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">@SharedLocalizer["ModalWindowLabelInformation"]</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@SharedLocalizer["ModalWindowButtonClose"]"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" asp-action="ChangeRole" asp-controller="Account" class="btn btn-primary">Отправить сообщение</button>
+                </div>*@
+            </div>
+        </div>
+    </div>  
+
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/lib/jquery/jquery-3.6.1.min.js"></script>
+    <script src="~/js/modal.js"></script>
+    <script scr="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

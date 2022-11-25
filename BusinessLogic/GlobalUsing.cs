@@ -10,6 +10,6 @@ global using Microsoft.AspNetCore.Http;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Logging;
 global using Models.Entities;
-global using System.ComponentModel.DataAnnotations;
+global using BusinessLogic.Implemantations;
 global using Models.Helpers;
 global using Microsoft.Extensions.Configuration;

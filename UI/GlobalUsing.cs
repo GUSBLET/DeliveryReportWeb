@@ -13,3 +13,8 @@ global using Models.Entities;
 global using BusinessLogic.Implemantations;
 global using BusinessLogic.Interfaces;
 global using Models.ViewModels;
+global using Microsoft.AspNetCore.Authorization;
+global using System.Net;
+global using System.Security.Claims;
+global using Models.Enums;
+global using Models.Response;

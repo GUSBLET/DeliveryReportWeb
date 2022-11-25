@@ -1,0 +1,92 @@
+﻿@using Models.Enums; 
+@using Models.ViewModels;
+@model IndexViewModel
+@{
+    ViewBag.TitlePage = Localizer["TitlePage"];
+}
+
+<div class="text-center" role="alert">
+    <div class="row justify-content-center">
+        <h1 style="align-content:center">@Localizer["LabelUserList"]</h1>
+    </div>
+</div>
+
+<form method="get">
+    <div class="form-field">
+        <div class="row">
+            <div class="col">
+                <label class="form-label">@Localizer["LabelFilterName"]</label>
+                <input name="email" type="text" class="form-control" value="@Model.FilterViewModel.SelectedEmail" placeholder="Name" aria-label="First name">
+            </div>
+            <div class="col">
+                <label class="form-label">@Localizer["LabelFilterRole"]</label>
+                <select class="form-control" asp-items="@Model.FilterViewModel.Roles" name="role"></select>
+            </div>
+        </div>
+        <br />
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">@Localizer["FilterButton"]</button>
+        </div>
+    </div>
+</form>
+<div class="table">
+    <table id="myTable" class="table table-bordered table-hover table-sm">
+        <thead>
+            <tr>
+                <th>@Localizer["IdColum"]</th>
+                <th>@Localizer["EmailColum"]</th>
+                <th>@Localizer["RoleColum"]</th>
+                <th>@Localizer["ViewDataColum"]</th>
+                <th>@Localizer["DeletUserColum"]</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    foreach (var Data in Model.Users)
+                    {
+                        <tr>
+                            <td>@Data.Id</td>
+                            <td>@Data.Email</td>
+                            <td>@Data.Role</td>
+                            <td><button type="submit" class="btn btn-sm btn-primary" onclick="openModal({ url: '@Url.Action("GetUserCard", "AdminPanel")', data: @Data.Id })">
+                                @Localizer["ShowDataColumButton"]
+                            </button></td>
+                            <td>
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="openModal({ url: '@Url.Action("GetDeleteUserCard", "AdminPanel")', data: @Data.Id })">
+                                    @Localizer["DeleteUserColumButton"]
+                                </button>
+                            </td>
+                            
+                            
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="form-field">
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a class="btn btn-primary"
+            asp-action="UserManagement"
+            asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+            role="button">@Localizer["BackPageButton"]
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a class="btn btn-primary"
+            asp-action="UserManagement"
+            asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+            role="button">@Localizer["NextPageButton"]
+        </a>       
+    }
+</div>
+
+
+

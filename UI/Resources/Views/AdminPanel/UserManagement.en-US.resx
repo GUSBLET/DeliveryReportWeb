@@ -117,13 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HeaderOfMessage" xml:space="preserve">
-    <value>Success</value>
+  <data name="BackPageButton" xml:space="preserve">
+    <value>Back</value>
   </data>
-  <data name="TextOfMessage" xml:space="preserve">
-    <value>Password changed</value>
+  <data name="DeleteUserColumButton" xml:space="preserve">
+    <value>Remove user</value>
+  </data>
+  <data name="DeletUserColum" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="EmailColum" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="IdColum" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="LabelFilterName" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="LabelFilterRole" xml:space="preserve">
+    <value>Role:</value>
+  </data>
+  <data name="LabelUserList" xml:space="preserve">
+    <value>User list</value>
+  </data>
+  <data name="NextPageButton" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="RoleColum" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="ShowDataColumButton" xml:space="preserve">
+    <value>Open</value>
   </data>
   <data name="TitlePage" xml:space="preserve">
-    <value>Success</value>
+    <value>User manager</value>
+  </data>
+  <data name="ViewDataColum" xml:space="preserve">
+    <value>Information of user</value>
   </data>
 </root>

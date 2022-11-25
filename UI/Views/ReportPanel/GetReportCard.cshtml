@@ -1,0 +1,25 @@
+﻿@using Models.Enums
+@model Models.ViewModels.ReportViewDataViewModel
+<form class="row g-3" asp-action="ChangingRole" asp-controller="AdminPanel" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="col-md-12">
+        <label asp-for="County" class="form-label"></label>
+        <input asp-for="County" type="email" class="form-control" readonly>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="WorkingTime" class="form-label"></label>
+        <input asp-for="WorkingTime" type="text" class="form-control" readonly>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="BeginTime" class="form-label"></label>
+        <input asp-for="BeginTime" type="text" class="form-control" readonly>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="EndTime" class="form-label"></label>
+        <input asp-for="EndTime" type="text" class="form-control" readonly>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="DistancePassed" class="form-label"></label>
+        <input asp-for="DistancePassed" type="text" class="form-control" readonly>
+    </div>
+</form>

@@ -5,8 +5,10 @@
         [Display(Name = "User")]
         User = 0,
         [Display(Name = "Deliveryman")]
-        Moderator = 1,
+        Deliveryman = 1,
+        [Display(Name = "Manager")]
+        Manager = 2,
         [Display(Name = "Admin")]
-        Admin = 2,
+        Admin = 3,
     }
 }

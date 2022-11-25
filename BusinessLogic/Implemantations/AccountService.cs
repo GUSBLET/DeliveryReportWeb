@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Builder;
+using System;
 
 namespace BusinessLogic.Implemantations
 {
@@ -15,28 +16,39 @@ namespace BusinessLogic.Implemantations
 
         public async Task<BaseResponse<bool>> ConfirmEmailAsync(ulong id, string key)
         {
-            var user = GetUserById(id).Result.Data;
-            if(user == null) 
-            { 
+            try
+            {
+                var user = GetUserById(id).Result.Data;
+                if (user == null)
+                {
+                    return new BaseResponse<bool>
+                    {
+                        Data = false
+                    };
+                }
+                if (id == user.Id && key == user.EmailConfirmedToken.ToString())
+                {
+                    user.EmailConfirmed = true;
+                    await _userRepository.Update(user);
+                    return new BaseResponse<bool>
+                    {
+                        Data = true
+                    };
+                }
                 return new BaseResponse<bool>
                 {
                     Data = false
                 };
             }
-            if(id == user.Id && key == user.EmailConfirmedToken.ToString())
+            catch(Exception ex) 
             {
-                user.EmailConfirmed = true;
-                _userRepository.Update(user);
-                return new BaseResponse<bool>
+                _logger.LogError(ex, $"[Login]: {ex.Message}");
+                return new BaseResponse<bool>()
                 {
-                    Data = true
+                    Description = ex.Message,
+                    StatusCode = HttpStatusCode.InternalServerError
                 };
             }
-            return new BaseResponse<bool>
-            {
-                Data = false
-            };
-
         }
 
         public async Task<BaseResponse<Account>> GetUserByEmail(string email)
@@ -57,7 +69,8 @@ namespace BusinessLogic.Implemantations
                                 }).FirstOrDefaultAsync();
             return new BaseResponse<Account>
             {
-                Data = result
+                Data = result,
+                StatusCode = HttpStatusCode.OK
             };            
         }
 
@@ -79,7 +92,8 @@ namespace BusinessLogic.Implemantations
                                }).FirstOrDefaultAsync();
             return new BaseResponse<Account>
             {
-                Data = result
+                Data = result,
+                StatusCode = HttpStatusCode.OK
             };
         }
 
@@ -94,6 +108,8 @@ namespace BusinessLogic.Implemantations
                                       Email = p.Email,
                                       Password = p.Password,
                                       Role = p.Role,
+                                      EmailConfirmedToken = p.EmailConfirmedToken,
+                                      EmailConfirmed = p.EmailConfirmed
                                   }).FirstOrDefaultAsync();
 
                 if(user == null)
@@ -101,7 +117,7 @@ namespace BusinessLogic.Implemantations
                     {
                         Description = "User not found"
                     };
-                if (!user.EmailConfirmed)
+                if (user.EmailConfirmed)
                 {
                     if (user.Password == HashPasswordHelper.HashPassowrd(model.Password))
                     {
@@ -202,14 +218,13 @@ namespace BusinessLogic.Implemantations
             try
             {
                 var user = GetUserById(id).Result.Data;
-                if (user == null)
-                {
+                if(user is null)
                     return new BaseResponse<bool>
                     {
                         Data = false,
+                        Description = "UserDosen'tExist",
                         StatusCode = HttpStatusCode.InternalServerError
                     };
-                }
                 if (user.Password == password)
                     return new BaseResponse<bool>
                     {
@@ -224,7 +239,7 @@ namespace BusinessLogic.Implemantations
                     {
 
                         user.Password = HashPasswordHelper.HashPassowrd(password);
-                        _userRepository.Update(user);
+                        await _userRepository.Update(user);
                         return new BaseResponse<bool>
                         {
                             Data = true,
@@ -250,6 +265,55 @@ namespace BusinessLogic.Implemantations
                     StatusCode = HttpStatusCode.InternalServerError
                 };
             }
+        }
+
+        public async Task<BaseResponse<List<Account>>> SelectUserList()
+        {
+            try
+            {
+                return new BaseResponse<List<Account>>
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Data = await _userRepository.Select().Where(x => x.EmailConfirmed == true).ToListAsync()
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Account service 'Method: SelectUserList'" + ex.Message);
+                return new BaseResponse<List<Account>>
+                {
+                    StatusCode = HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
+        public async Task<BaseResponse<Account>> UpdateUser(ChangeUserViewModel account)
+        {
+            try
+            {
+                if (account is null)
+                {
+                    return new BaseResponse<Account>
+                    {
+                        StatusCode = HttpStatusCode.InternalServerError
+                    };
+                }
+                var user = GetUserByEmail(account.Email);
+                user.Result.Data.PhoneNumber = account.PhoneNumber;
+                user.Result.Data.LastName = account.LastName;
+                user.Result.Data.Name = account.Name;
+                await _userRepository.Update(user.Result.Data);
+                return new BaseResponse<Account>
+                {
+                    StatusCode = HttpStatusCode.OK
+                };
+            }   
+            catch (Exception ex) 
+            {
+                _logger.LogError($"Error: {ex.Message}");
+                return new BaseResponse<Account> { StatusCode = HttpStatusCode.InternalServerError };
+            }
+            
         }
 
         private ClaimsIdentity Authenticate(Account user)

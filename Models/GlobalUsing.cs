@@ -3,4 +3,4 @@ global using Models.Enums;
 global using System.Net;
 global using System.Security.Cryptography;
 global using System.Text;
-global using Microsoft.AspNetCore.Http;
+global using Models.Entities;

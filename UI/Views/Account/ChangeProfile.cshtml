@@ -1,0 +1,31 @@
+﻿@model Models.ViewModels.ChangeUserViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using (Html.BeginForm("ChangeProfile", "Account", FormMethod.Post))
+{
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input asp-for="Role" hidden>
+    <div class="form-field">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control"aria-describedby="emailHelp" readonly>
+    </div>    
+    <div class="form-field">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" >
+    </div>
+    <div class="form-field">
+        <label asp-for="LastName" class="form-label"></label>
+        <input asp-for="LastName" class="form-control">
+    </div>
+    <div class="form-field">
+        <label asp-for="PhoneNumber" class="form-label"></label>
+        <input asp-for="PhoneNumber" type="number" class="PhoneNumber form-control">
+    </div>
+    <div class="form-field">
+        <button type="submit" class="btn btn-primary">@SharedLocalizer["SubmitButtonInForm"]</button>
+    </div>
+}

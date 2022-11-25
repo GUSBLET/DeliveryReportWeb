@@ -1,0 +1,30 @@
+﻿@using Models.Enums
+@model Models.ViewModels.ChangeUserViewModel
+<form class="row g-3" asp-action="ChangingRole" asp-controller="AdminPanel" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="col-md-12">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" type="email" class="form-control" readonly>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" type="text" class="form-control" readonly>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="LastName" class="form-label"></label>
+        <input asp-for="LastName" type="text" class="form-control" readonly>
+    </div>
+    <div class="col-12">
+        <label asp-for="PhoneNumber" class="form-label"></label>
+        <input asp-for="PhoneNumber" type="text" class="form-control" readonly>
+    </div>
+    <div class="col-12">
+        <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+        <select asp-for="@Model.Role" asp-items="Html.GetEnumSelectList<Role>()" class="form-select" >
+            <option value="@Model.Role">@Model.Role</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Отправить сообщение</button>
+    </div>
+</form>

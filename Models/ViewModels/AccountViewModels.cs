@@ -1,7 +1,34 @@
 ﻿namespace Models.ViewModels
 {
+    public class ChangeUserViewModel
+    {
+        [Required(ErrorMessage = "FieldEmailErrorRequired")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "UserCardEmailLabel")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "FieldNameErrorRequired")]
+        [DataType(DataType.Text)]
+        [Display(Name = "UserCardNameLabel")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "FieldLastNameErrorRequired")]
+        [DataType(DataType.Text)]
+        [Display(Name = "UserCardLastNameLabel")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "FieldPhoneNumberErrorRequired")]
+        [DataType(DataType.Text)]
+        [Display(Name = "UserCardPhoneNumberLabel")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "UserCardRoleLabel")]
+        public Role Role { get; set; }
+    }
+
     public class AccountProfileViewModels
     {
+        public ulong Id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }

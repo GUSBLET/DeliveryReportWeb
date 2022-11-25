@@ -1,0 +1,31 @@
+﻿@model Models.ViewModels.CreateReportViewModel
+@{
+}
+@using (Html.BeginForm("CreateReport", "ReportPanel", FormMethod.Post))
+{
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-field">
+            <label asp-for="County" class="form-label"></label>
+            <input asp-for="County" class="form-control" aria-describedby="emailHelp" />
+        </div>
+        <div class="form-field">
+            <label asp-for="DistancePassed" class="form-label"></label>
+            <input asp-for="DistancePassed" class="form-control"/>
+        </div>
+        <div class="form-field">
+            <label asp-for="BeginTime"class="form-label"></label>
+            <input asp-for="BeginTime" class="form-control" aria-describedby="passwordHelp" />
+        </div>
+        <div class="form-field">
+            <label asp-for="EndTime"class="form-label"></label>
+            <input asp-for="EndTime" class="form-control"/> 
+        </div>
+        <div class="form-field">
+            <label asp-for="WorkingTime"  class="form-label"></label>
+            <input asp-for="WorkingTime" class="form-control" />
+        </div>        
+        <div class="form-field">
+            <button type="submit" class="btn btn-primary">@SharedLocalizer["SubmitButtonInForm"]</button>
+        </div>  
+}

@@ -1,0 +1,129 @@
+﻿@using Models.ViewModels;
+@model ViewReportsViewModel
+@{
+    ViewBag.TitlePage = Localizer["TitlePage"];
+    string day = "Day";
+    string month = "Month";
+    string year = "Year";
+    string headerOfTable = "LabelReportList";
+
+    if (User.IsInRole("Delivaryman"))
+        headerOfTable = "LabelYourReportList";
+    if (Model.DelivarymanReportFilterViewModel.SelectedDate.Day != 1 &&
+        Model.DelivarymanReportFilterViewModel.SelectedDate.Month != 1 &&
+        Model.DelivarymanReportFilterViewModel.SelectedDate.Year != 1)
+    {
+        day = Model.DelivarymanReportFilterViewModel.SelectedDate.Day.ToString();
+        month = Model.DelivarymanReportFilterViewModel.SelectedDate.Month.ToString();
+        year = Model.DelivarymanReportFilterViewModel.SelectedDate.Year.ToString();
+    }
+    
+
+}
+
+<div class="text-center" role="alert">
+    <div class="row justify-content-center">
+        <h1 style="align-content:center">@Localizer[@headerOfTable]</h1>
+    </div>
+</div>
+<form method="get">
+    <div class="form-field">
+        <div class="row">
+            <div class="col">
+                <label class="form-label">@Localizer["LabelFilterCounty"]</label>
+                <input name="county" type="text" class="form-control" value="@Model.DelivarymanReportFilterViewModel.SelectedCounty" placeholder="Name" aria-label="First name">
+            </div>
+            <div class="col">
+                <label class="form-label">@Localizer["LabelFilterName"]</label>
+                <div class="row">
+                    <div class="col">
+                        <select class="form-select" asp-items="@Model.DelivarymanReportFilterViewModel.Days" name="day">
+                            <option value="@day" selected>@Localizer[@day]</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" asp-items="@Model.DelivarymanReportFilterViewModel.Months" name="month">
+                            <option value="@month" selected>@Localizer[@month]</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" asp-items="@Model.DelivarymanReportFilterViewModel.Years" name="year">
+                            <option value="@year" selected>@Localizer[year]</option>
+                        </select>
+                    </div>
+                </div>
+                @if (User.IsInRole("Admin") || User.IsInRole("Manger"))
+                {
+                    <div class="col">
+                        <label class="form-label">@Localizer["LabelFilterName"]</label>
+                        <input name="name" type="text" class="form-control" value="@Model.DelivarymanReportFilterViewModel.SelectedName" placeholder="Name" aria-label="First name">
+                    </div>
+                    <div class="col">
+                        <label class="form-label">@Localizer["LabelFilterLastName"]</label>
+                        <input name="lastName" type="text" class="form-control" value="@Model.DelivarymanReportFilterViewModel.SelectedLastName" placeholder="Name" aria-label="First name">
+                    </div>
+                }
+                
+            </div>
+        </div>
+        <br />
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">@SharedLocalizer["FilterButton"]</button>
+        </div>
+    </div>
+</form>
+<div class="table">
+    <table id="myTable" class="table table-bordered table-hover table-sm">
+        <thead>
+            <tr>
+                <th>@Localizer["IdColum"]</th>
+                <th>@Localizer["ReportDateColum"]</th>
+                <th>@Localizer["CountyColum"]</th>
+                <th>@Localizer["ViewDataColum"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    foreach (var Data in Model.Reports)
+                    {
+                        <tr>
+                            <td>@Data.Id</td>
+                            <td>@Data.ReportDate</td>
+                            <td>@Data.County</td>
+                            <td>
+                                <button type="submit" class="btn btn-sm btn-primary" onclick="openModal({ url: '@Url.Action("GetReportCard", "ReportPanel")', data: @Data.Id })">
+                                    @Localizer["ShowDataColumButton"]
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="form-field">
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a class="btn btn-primary"
+       asp-action="UserManagement"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       role="button">
+            @Localizer["BackPageButton"]
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a class="btn btn-primary"
+       asp-action="UserManagement"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       role="button">
+            @Localizer["NextPageButton"]
+        </a>
+    }
+</div>
+
+

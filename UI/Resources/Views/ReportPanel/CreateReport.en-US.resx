@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HeaderOfMessage" xml:space="preserve">
-    <value>Success Registration</value>
-  </data>
-  <data name="TextOfMessage" xml:space="preserve">
-    <value>Please check your email for the verification action.</value>
+  <data name="FieldErrorRequired" xml:space="preserve">
+    <value>Field have to required</value>
   </data>
   <data name="TitlePage" xml:space="preserve">
-    <value>Success</value>
+    <value>Create report</value>
   </data>
 </root>

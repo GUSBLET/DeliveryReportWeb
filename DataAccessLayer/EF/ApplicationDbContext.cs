@@ -1,4 +1,7 @@
-﻿namespace DataAccessLayer.EF
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.ComponentModel;
+
+namespace DataAccessLayer.EF
 {
     public class ApplicationDbContext : DbContext
     {
@@ -9,6 +12,8 @@
         }
 
         public DbSet<Account> TableUsers { get; set; } 
+
+        public DbSet<ReportOfDelivary> TableReports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +53,24 @@
                     Role = Models.Enums.Role.Admin
                 });
             });
+
+            modelBuilder.Entity<ReportOfDelivary>(buildAction =>
+            {
+                buildAction.ToTable("TableReports")
+                    .HasKey(x => x.Id);
+                buildAction.Property(x => x.Id)
+                    .ValueGeneratedOnAdd();
+                buildAction.Property(x => x.BeginTime)
+                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
+                buildAction.Property(x => x.WorkingTime)
+                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
+                buildAction.Property(x => x.EndTime)
+                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
+                buildAction.Property(x => x.ReportDate)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+
+            });
+
         }
     }
 }
