@@ -8,5 +8,6 @@ namespace BusinessLogic.Interfaces
         Task<BaseResponse<List<ReportOfDelivary>>> SelectReportListByIdUser(ulong id);
         Task<BaseResponse<ReportOfDelivary>> SelectReportById(ulong id);
         Task<BaseResponse<List<ReportOfDelivary>>> SelectAllReportList();
+        Task<BaseResponse<CustomFile>> GenerateReportsFile(List<ControlReportViewModal> model, string language);
     }
 }

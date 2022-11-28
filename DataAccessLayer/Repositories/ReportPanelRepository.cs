@@ -4,8 +4,8 @@
     {
         private readonly ApplicationDbContext _dataBase;
 
-        public ReportPanelRepository(ApplicationDbContext dataBase) 
-        { 
+        public ReportPanelRepository(ApplicationDbContext dataBase)
+        {
             _dataBase = dataBase;
         }
 

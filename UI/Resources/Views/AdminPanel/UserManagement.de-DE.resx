@@ -117,165 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessDeniedError" xml:space="preserve">
-    <value>Access denied</value>
+  <data name="BackPageButton" xml:space="preserve">
+    <value>Der Rücken</value>
   </data>
-  <data name="BeginTimeLabel" xml:space="preserve">
-    <value>Begin time:</value>
+  <data name="DeleteUserColumButton" xml:space="preserve">
+    <value>Benutzer entfernen</value>
   </data>
-  <data name="CheckEmailForResetPasswordMessage" xml:space="preserve">
-    <value>Please check your email for the reset your password.</value>
-    <comment>Body of information message</comment>
+  <data name="DeletUserColum" xml:space="preserve">
+    <value>Entfernen</value>
   </data>
-  <data name="CountyLabel" xml:space="preserve">
-    <value>County:</value>
-  </data>
-  <data name="DistancePassedLabel" xml:space="preserve">
-    <value>Distance passed in meters:</value>
-  </data>
-  <data name="EmailLabel" xml:space="preserve">
-    <value>Enter your email:</value>
-  </data>
-  <data name="EndTimeLabel" xml:space="preserve">
-    <value>End time:</value>
-  </data>
-  <data name="ErrorHeaderOfMessage" xml:space="preserve">
-    <value>Error</value>
-    <comment>Title of information message</comment>
-  </data>
-  <data name="ErrorPasswordCompare" xml:space="preserve">
-    <value>Passwords do not match</value>
-  </data>
-  <data name="FieldEmailErrorRequired" xml:space="preserve">
-    <value>Email field must be required</value>
-  </data>
-  <data name="FieldErrorRequired" xml:space="preserve">
-    <value>Field have to required</value>
-  </data>
-  <data name="FieldLastNameErrorRequired" xml:space="preserve">
-    <value>Last name field must be required</value>
-  </data>
-  <data name="FieldNameErrorRequired" xml:space="preserve">
-    <value>Name field must be required</value>
-  </data>
-  <data name="FieldPasswordConfirmErrorRequired" xml:space="preserve">
-    <value>Field confirm password must be required</value>
-  </data>
-  <data name="FieldPasswordErrorRequired" xml:space="preserve">
-    <value>Password field must be reauired</value>
-  </data>
-  <data name="FieldPhoneNumberErrorRequired" xml:space="preserve">
-    <value>Phone number field must be required</value>
+  <data name="EmailColum" xml:space="preserve">
+    <value>Email</value>
   </data>
   <data name="FilterButton" xml:space="preserve">
     <value>Filter</value>
   </data>
-  <data name="FullNameLabel" xml:space="preserve">
-    <value>Full name:</value>
+  <data name="IdColum" xml:space="preserve">
+    <value>Id</value>
   </data>
-  <data name="LastNameLabel" xml:space="preserve">
-    <value>Enter your last name:</value>
+  <data name="LabelFilterName" xml:space="preserve">
+    <value>Name:</value>
   </data>
-  <data name="ModalWindowLabelInformation" xml:space="preserve">
-    <value>Information</value>
+  <data name="LabelFilterRole" xml:space="preserve">
+    <value>Rolle:</value>
   </data>
-  <data name="NameLabel" xml:space="preserve">
-    <value>Enter your name:</value>
+  <data name="LabelUserList" xml:space="preserve">
+    <value>Benutzerliste</value>
   </data>
-  <data name="NavBarAdminPanelDropDown" xml:space="preserve">
-    <value>Admin panel</value>
+  <data name="NextPageButton" xml:space="preserve">
+    <value>Nächste</value>
   </data>
-  <data name="NavBarAdminPanelDropDownButtonCheckReport" xml:space="preserve">
-    <value>Check report</value>
+  <data name="RoleColum" xml:space="preserve">
+    <value>Rolle</value>
   </data>
-  <data name="NavBarAdminPanelDropDownButtonUserManagement" xml:space="preserve">
-    <value>User management</value>
+  <data name="ShowDataColumButton" xml:space="preserve">
+    <value>Offen</value>
   </data>
-  <data name="NavBarCreateReportButton" xml:space="preserve">
-    <value>Create report</value>
-    <comment>Name for navbar</comment>
+  <data name="TitlePage" xml:space="preserve">
+    <value>Benutzer Manager</value>
   </data>
-  <data name="NavBarLoginButton" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="NavBarLogoutButton" xml:space="preserve">
-    <value>Logout</value>
-  </data>
-  <data name="NavBarProfileButton" xml:space="preserve">
-    <value>Profile</value>
-  </data>
-  <data name="NavBarRegistretionButton" xml:space="preserve">
-    <value>Registration</value>
-  </data>
-  <data name="NavBarReportPanelDropDown" xml:space="preserve">
-    <value>Report panel</value>
-    <comment>Name for navbar</comment>
-  </data>
-  <data name="NavBarViewingReportsPanelButton" xml:space="preserve">
-    <value>Your reports</value>
-    <comment>Name for navbar</comment>
-  </data>
-  <data name="PasswordChangedMessage" xml:space="preserve">
-    <value>Password changed.</value>
-    <comment>Body of information message</comment>
-  </data>
-  <data name="PasswordConfirmLabel" xml:space="preserve">
-    <value>Confirm your password:</value>
-  </data>
-  <data name="PasswordLabel" xml:space="preserve">
-    <value>Password:</value>
-  </data>
-  <data name="PhoneNumberLabel" xml:space="preserve">
-    <value>Enter your phone number:</value>
-  </data>
-  <data name="ReportCreatedMessage" xml:space="preserve">
-    <value>Report created successfully</value>
-    <comment>Body of information message</comment>
-  </data>
-  <data name="ReportDateLabel" xml:space="preserve">
-    <value>Report date:</value>
-  </data>
-  <data name="ReportDidNotCreatMessage" xml:space="preserve">
-    <value>Report didn't create</value>
-    <comment>Body of information message</comment>
-  </data>
-  <data name="ReportIdLabel" xml:space="preserve">
-    <value>Report id:</value>
-  </data>
-  <data name="SubmitButtonInForm" xml:space="preserve">
-    <value>Submit</value>
-  </data>
-  <data name="SuccessfullyHeaderOfMessage" xml:space="preserve">
-    <value>Success</value>
-    <comment>Title of information message</comment>
-  </data>
-  <data name="SuccessRegistrationMessge" xml:space="preserve">
-    <value>Please check your email for the verification action.</value>
-    <comment>Body of information message</comment>
-  </data>
-  <data name="UserCardEmailLabel" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="UserCardLastNameLabel" xml:space="preserve">
-    <value>Last Name</value>
-  </data>
-  <data name="UserCardNameLabel" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="UserCardPhoneNumberLabel" xml:space="preserve">
-    <value>Phone number</value>
-  </data>
-  <data name="UserCardRoleLabel" xml:space="preserve">
-    <value>Role</value>
-  </data>
-  <data name="UserDosen'tExistMessage" xml:space="preserve">
-    <value>User doesn't exist</value>
-    <comment>Body of information message</comment>
-  </data>
-  <data name="UserIdLabel" xml:space="preserve">
-    <value>User id:</value>
-  </data>
-  <data name="WorkingTimeLabel" xml:space="preserve">
-    <value>Working time:</value>
+  <data name="ViewDataColum" xml:space="preserve">
+    <value>Informationen des Benutzers</value>
   </data>
 </root>

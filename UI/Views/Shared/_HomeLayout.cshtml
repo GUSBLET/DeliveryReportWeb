@@ -62,7 +62,7 @@
                                 @SharedLocalizer["NavBarAdminPanelDropDown"]
                             </a>
                             <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-action="ControlReportsViewPage" asp-controller="ReportPanel">@SharedLocalizer["NavBarAdminPanelDropDownButtonCheckReport"]</a></li>
+                                    <li><a class="dropdown-item" asp-action="ReportsViewPage" asp-controller="ReportPanel">@SharedLocalizer["NavBarAdminPanelDropDownButtonCheckReport"]</a></li>
                                     <li><a class="dropdown-item" asp-action="UserManagement" asp-controller="AdminPanel">@SharedLocalizer["NavBarAdminPanelDropDownButtonUserManagement"]</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -76,8 +76,8 @@
                                 @SharedLocalizer["NavBarReportPanelDropDown"]
                             </a>
                             <ul class="dropdown-menu">
+                                    <li><a class="nav-link" asp-action="ReportsViewPage" asp-controller="ReportPanel">@SharedLocalizer["NavBarViewingReportsPanelButton"]</a></li>
                                     <li><a class="nav-link" asp-action="CreateReport" asp-controller="ReportPanel">@SharedLocalizer["NavBarCreateReportButton"]</a></li>
-                                    <li><a class="nav-link" asp-action="DelivarymanReportsViewPage" asp-controller="ReportPanel">@SharedLocalizer["NavBarViewingReportsPanelButton"]</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>

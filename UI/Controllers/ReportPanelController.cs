@@ -1,4 +1,7 @@
-﻿using System.Data;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
+using System.Reflection.Metadata;
+using UIQueue.Controllers;
 
 namespace UI.Controllers
 {
@@ -26,13 +29,13 @@ namespace UI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateReport(CreateReportViewModel model)
-        { 
-            if (ModelState.IsValid) 
+        {
+            if (ModelState.IsValid)
             {
                 model.ReportDate = DateOnly.FromDateTime(DateTime.Now);
                 model.UserId = _accountService.GetUserByEmail(User.Identity.Name ?? " ").Result.Data.Id;
-                var response = await _reportPanelService.CreateReport(model);   
-                if( response.StatusCode == System.Net.HttpStatusCode.OK ) 
+                var response = await _reportPanelService.CreateReport(model);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     return View("Success", "ReportCreatedMessage");
                 }
@@ -42,23 +45,39 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DelivarymanReportsViewPage(string? lastName, string? name,
-                                                                int? month, int? day, int? year,
+        public async Task<IActionResult> ReportsViewPage(byte? createFile,DateOnly? date, string? fullName,
                                                                 string? county, int page = 1)
         {
-            DateOnly date;
             int pageSize = 15;   // size elemt on page
-            if (month is null || day is null || year is null)
-                date = new DateOnly();
-            else
-                date = new DateOnly((int)year, (int)month, (int)day);
+
             ulong userId = _accountService.GetUserByEmail(User.Identity.Name ?? " ").Result.Data.Id;
-            var response = await _reportPanelService.SelectReportListByIdUser(userId);
 
-            if (response.Data is null)
-                response.Data = new List<ReportOfDelivary>();
+            var response =
+                from reports in _reportPanelService.SelectAllReportList().Result.Data
+                join users in _accountService.SelectUserList().Result.Data
+                on reports.UserId equals users.Id into reportsUserGroup
+                from subUsers in reportsUserGroup.DefaultIfEmpty()
+                select new ControlReportViewModal
+                {
+                    ReportId = reports.Id,
+                    UserId = reports.UserId,
+                    FullName = subUsers.Name + " " + subUsers.LastName,
+                    BeginTime = reports.BeginTime,
+                    EndTime = reports.EndTime,
+                    ReportDate = reports.ReportDate,
+                    WorkingTime = reports.WorkingTime,
+                    County = reports.County,
+                    DistancePassed = reports.DistancePassed
+                };
 
-            IEnumerable<ReportOfDelivary> source = response.Data;
+
+            if (date is null)
+                date = DateOnly.MinValue;
+
+            if (response is null)
+                response = new List<ControlReportViewModal>();
+
+            IEnumerable<ControlReportViewModal> source = response;
             if (date != DateOnly.MinValue)
             {
                 source = source.Where(p => p.ReportDate == date);
@@ -67,87 +86,51 @@ namespace UI.Controllers
             {
                 source = source.Where(p => p.County!.Contains(county));
             }
+            if (!string.IsNullOrEmpty(fullName))
+            {
+                source = source.Where(p => p.FullName!.Contains(fullName));
+            }
+
+            if (createFile == 1)
+            {
+                
+                string language = Request.Cookies[".AspNetCore.Culture"];
+                var fileResponse = await _reportPanelService.GenerateReportsFile(source.ToList(), language);
+                return File(new MemoryStream(fileResponse.Data.FileContents, 0, fileResponse.Data.FileContents.Length),
+                             fileResponse.Data.ContentType, fileResponse.Data.FileName);
+            }
 
 
             var count = source.Count();
             var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            ControlViewReportsViewModel viewModel = new ControlViewReportsViewModel(items, pageViewModel,
+                new ReportFilterUserMangeViewModel(fullName, date.Value, county));
+            return View("ReportsViewPage", viewModel);
 
-            ViewReportsViewModel viewModel = new ViewReportsViewModel(items, pageViewModel,
-                new ReportFilterUserMangeViewModel(lastName, name, date, county));
-            return View("ViewReportsViewPage", viewModel);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ControlReportsViewPage(string? lastName, string? name, 
-                                                                int? month, int? day, int? year,
-                                                                string? county, int page = 1)
-        {
-            DateOnly date;
-            int pageSize = 15;   // size elemt on page
-            if (month is null || day is null || year is null)
-                date = new DateOnly();
-            else
-                date = new DateOnly((int)year, (int)month, (int)day);
-            ulong userId = _accountService.GetUserByEmail(User.Identity.Name ?? " ").Result.Data.Id;
-            var response =
-                from reports in _reportPanelService.SelectAllReportList().Result.Data
-                join users in _accountService.SelectUserList().Result.Data
-                on reports.UserId equals users.Id into reportsUserGroup
-                from subUsers in reportsUserGroup.DefaultIfEmpty()
-                select new 
-                { 
-                    reportId = reports.Id,
-                    userId = reports.UserId,
-                    fullName = subUsers.Name + subUsers.LastName,
-                    beginTime = reports.BeginTime,
-                    endTime = reports.EndTime,
-                    reportDate = reports.ReportDate,
-                    workingtime = reports.WorkingTime
-                };
-
-
-            //if (responseReports.Data is null)
-            //    responseReports.Data = new List<ReportOfDelivary>();
-
-            //IEnumerable<ReportOfDelivary> source = response;
-            //if (date != DateOnly.MinValue)
-            //{
-            //    source = source.Where(p => p.ReportDate == date);
-            //}
-            //if (!string.IsNullOrEmpty(county))
-            //{
-            //    source = source.Where(p => p.County!.Contains(county));
-            //}
-
-
-            //var count = source.Count();
-            //var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
-            //PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-
-            //ViewReportsViewModel viewModel = new ViewReportsViewModel(items, pageViewModel,
-            //    new ReportFilterUserMangeViewModels(lastName, name, date, county));
-            return View("ViewReportsViewPage"/*, viewModel*/);
-        }
+        
 
         [HttpGet]
         public async Task<IActionResult> GetReportCard(ulong id, bool isJson)
         {
             var response = await _reportPanelService.SelectReportById(id);
+            var userName = await _accountService.GetUserById(response.Data.UserId);
             var viewModel = new ReportViewDataViewModel
             {
                 County = response.Data.County,
                 DistancePassed = response.Data.DistancePassed,
                 BeginTime = response.Data.BeginTime,
-                EndTime = response.Data.EndTime
+                EndTime = response.Data.EndTime,
+                UserId = response.Data.UserId,
+                ReportId = response.Data.Id,
+                FullName = userName.Data.Name + " " + userName.Data.LastName
             };
             if (isJson)
                 return Json(response.Data);
             return PartialView("GetReportCard", viewModel);
-
-
         }
 
     }

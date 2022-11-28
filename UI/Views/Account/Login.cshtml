@@ -1,5 +1,4 @@
-﻿
-@model Models.ViewModels.LoginViewModel
+﻿@model Models.ViewModels.LoginViewModel
 @{
     ViewBag.TitlePage = Localizer["TitlePage"];
 }
@@ -14,6 +13,7 @@
     <div class="form-field">
         <label asp-for="Password" for="exampleInputPassword1" class="form-label"></label>
         <input asp-for="Password" class="form-control" id="exampleInputPassword1">
+        <a asp-action="ResetPasswordRequist" asp-controller="Account">@Localizer["ResetPasswordLink"]</a>
     </div>
     <div class="form-field">
         <button type="submit" class="btn btn-primary">@SharedLocalizer["SubmitButtonInForm"]</button>

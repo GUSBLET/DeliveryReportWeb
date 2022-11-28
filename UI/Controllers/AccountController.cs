@@ -13,9 +13,9 @@ namespace UI.Controllers
             _accountService = accountService;
             _mailService = mailService;
         }
-        
+
         [HttpGet]
-        public IActionResult Registration() 
+        public IActionResult Registration()
         {
             return View();
         }
@@ -79,16 +79,16 @@ namespace UI.Controllers
         [HttpPost]
         public async Task<IActionResult> ResetPasswordRequist(ResetPasswordRequistViewModel model)
         {
-            if(ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var user = _accountService.GetUserByEmail(model.Email);
-                if (user.Result.Data == null || user.Result.Data.Email != User.Identity.Name)
+                if (user.Result.Data == null)
                 {
                     ModelState.AddModelError("", user.Result.Description);
                     return View(model);
                 }
-                    
-                    
+
+
                 string emailConfirmationUrl = Url.Action(
                     "ResetPassword",
                     "Account",
@@ -112,7 +112,7 @@ namespace UI.Controllers
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             ViewBag.Id = model.Id;
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var response = _accountService.ResetPassword(model.Id, model.Password);
                 if (response.Result.StatusCode == HttpStatusCode.OK)
@@ -189,7 +189,7 @@ namespace UI.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeProfile(ChangeUserViewModel account)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var response = await _accountService.UpdateUser(account);
                 if (response.StatusCode == HttpStatusCode.OK)
@@ -197,11 +197,11 @@ namespace UI.Controllers
                 return RedirectToAction("Error");
             }
             return View(account);
-            
+
         }
 
-        
 
-        
+
+
     }
 }

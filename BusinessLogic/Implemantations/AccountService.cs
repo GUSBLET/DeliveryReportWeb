@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
-using System;
-
-namespace BusinessLogic.Implemantations
+﻿namespace BusinessLogic.Implemantations
 {
     public class AccountService : IAccountService
     {
         private readonly ILogger<AccountService> _logger;
         private readonly IBaseRepository<Account> _userRepository;
 
-        public AccountService(ILogger<AccountService> logger, IBaseRepository<Account> userRepository) 
+        public AccountService(ILogger<AccountService> logger, IBaseRepository<Account> userRepository)
         {
             _logger = logger;
             _userRepository = userRepository;
@@ -40,7 +37,7 @@ namespace BusinessLogic.Implemantations
                     Data = false
                 };
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 _logger.LogError(ex, $"[Login]: {ex.Message}");
                 return new BaseResponse<bool>()
@@ -67,29 +64,40 @@ namespace BusinessLogic.Implemantations
                                     EmailConfirmed = p.EmailConfirmed,
                                     EmailConfirmedToken = p.EmailConfirmedToken
                                 }).FirstOrDefaultAsync();
+            if(result == null )
+                return new BaseResponse<Account>
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    Description = "User not found"
+                };
             return new BaseResponse<Account>
             {
                 Data = result,
                 StatusCode = HttpStatusCode.OK
-            };            
+            };
         }
 
         public async Task<BaseResponse<Account>> GetUserById(ulong id)
         {
-            var result = await(from p in _userRepository.Select()
-                               where p.Id == id
-                               select new Account
-                               {
-                                   Id = p.Id,
-                                   Email = p.Email,
-                                   Password = p.Password,
-                                   Name = p.Name,
-                                   LastName = p.LastName,
-                                   PhoneNumber = p.PhoneNumber,
-                                   Role = p.Role,
-                                   EmailConfirmed = p.EmailConfirmed,
-                                   EmailConfirmedToken = p.EmailConfirmedToken
-                               }).FirstOrDefaultAsync();
+            var result = await (from p in _userRepository.Select()
+                                where p.Id == id
+                                select new Account
+                                {
+                                    Id = p.Id,
+                                    Email = p.Email,
+                                    Password = p.Password,
+                                    Name = p.Name,
+                                    LastName = p.LastName,
+                                    PhoneNumber = p.PhoneNumber,
+                                    Role = p.Role,
+                                    EmailConfirmed = p.EmailConfirmed,
+                                    EmailConfirmedToken = p.EmailConfirmedToken
+                                }).FirstOrDefaultAsync();
+            if (result == null)
+                return new BaseResponse<Account>
+                {
+                    StatusCode = HttpStatusCode.InternalServerError
+                };
             return new BaseResponse<Account>
             {
                 Data = result,
@@ -112,7 +120,7 @@ namespace BusinessLogic.Implemantations
                                       EmailConfirmed = p.EmailConfirmed
                                   }).FirstOrDefaultAsync();
 
-                if(user == null)
+                if (user == null)
                     return new BaseResponse<ClaimsIdentity>()
                     {
                         Description = "User not found"
@@ -140,7 +148,7 @@ namespace BusinessLogic.Implemantations
                         Description = "Email didn't confirm"
                     };
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 _logger.LogError(ex, $"[Login]: {ex.Message}");
                 return new BaseResponse<ClaimsIdentity>()
@@ -156,15 +164,15 @@ namespace BusinessLogic.Implemantations
             try
             {
                 var userExist = await (from p in _userRepository.Select()
-                                where p.Email == model.Email
-                                select new
-                                {
-                                    Email = model.Email
-                                }).FirstOrDefaultAsync();
+                                       where p.Email == model.Email
+                                       select new
+                                       {
+                                           Email = model.Email
+                                       }).FirstOrDefaultAsync();
 
-                if(userExist == null)
+                if (userExist == null)
                 {
-                    if(MaskPassword(model.Password))
+                    if (MaskPassword(model.Password))
                     {
                         var account = new Account()
                         {
@@ -177,8 +185,8 @@ namespace BusinessLogic.Implemantations
                             EmailConfirmedToken = Guid.NewGuid(),
                             EmailConfirmed = false
                         };
-                            
-                        if(await _userRepository.Add(account)) 
+
+                        if (await _userRepository.Add(account))
                             return new BaseResponse<ClaimsIdentity>()
                             {
                                 Description = "User Added",
@@ -193,14 +201,14 @@ namespace BusinessLogic.Implemantations
                         };
                     }
                     return new BaseResponse<ClaimsIdentity>()
-                        {
-                            Description = "Password must have numbers and latin letters",
-                        };
+                    {
+                        Description = "Password must have numbers and latin letters",
+                    };
                 }
                 return new BaseResponse<ClaimsIdentity>()
-                    {
-                        Description = "User exist", 
-                    };
+                {
+                    Description = "User exist",
+                };
             }
             catch (Exception ex)
             {
@@ -213,12 +221,12 @@ namespace BusinessLogic.Implemantations
             }
         }
 
-        public async Task<BaseResponse<bool>> ResetPassword(ulong id , string password)
+        public async Task<BaseResponse<bool>> ResetPassword(ulong id, string password)
         {
             try
             {
                 var user = GetUserById(id).Result.Data;
-                if(user is null)
+                if (user is null)
                     return new BaseResponse<bool>
                     {
                         Data = false,
@@ -233,7 +241,7 @@ namespace BusinessLogic.Implemantations
                         StatusCode = HttpStatusCode.InternalServerError
 
                     };
-                if(MaskPassword(password))
+                if (MaskPassword(password))
                 {
                     if (id == user.Id)
                     {
@@ -307,13 +315,13 @@ namespace BusinessLogic.Implemantations
                 {
                     StatusCode = HttpStatusCode.OK
                 };
-            }   
-            catch (Exception ex) 
+            }
+            catch (Exception ex)
             {
                 _logger.LogError($"Error: {ex.Message}");
                 return new BaseResponse<Account> { StatusCode = HttpStatusCode.InternalServerError };
             }
-            
+
         }
 
         private ClaimsIdentity Authenticate(Account user)
@@ -340,7 +348,7 @@ namespace BusinessLogic.Implemantations
                 return true;
             return false;
         }
-    
-    
+
+
     }
 }

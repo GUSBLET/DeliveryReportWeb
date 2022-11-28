@@ -1,0 +1,127 @@
+﻿@using Models.ViewModels;
+@model ControlViewReportsViewModel
+@{
+    ViewBag.TitlePage = Localizer["TitlePage"];
+    string tableTitle = "HeaderOfTable";
+    string day;
+    string month;
+
+    if (User.IsInRole("Deliveryman"))
+        tableTitle = "DeliverymanHeaderOfTable";
+
+    if (Model.ReportFilterViewModel.SelectedDate.Day < 10)
+        day = "0" + Model.ReportFilterViewModel.SelectedDate.Day;
+    else
+        day = Model.ReportFilterViewModel.SelectedDate.Day.ToString();
+    if (Model.ReportFilterViewModel.SelectedDate.Month < 10)
+        month = "0" + Model.ReportFilterViewModel.SelectedDate.Month;
+    else
+        month = Model.ReportFilterViewModel.SelectedDate.Month.ToString();
+
+    string dateFilter = $"{Model.ReportFilterViewModel.SelectedDate.Year}-{month}-{day}";
+}
+
+<div class="text-center" role="alert">
+    <div class="row justify-content-center">
+        <h1 style="align-content:center">@Localizer[@tableTitle]</h1>
+    </div>
+</div>
+<form method="get">
+    <div class="form-field">
+        <div class="row">
+            <div class="col">
+                <label class="form-label">@Localizer["LabelFilterDate"]</label>
+                <input type="date" value="@dateFilter" class="form-control" min="1900-01-01" name="date" />
+            </div>
+            <div class="col">
+                <label class="form-label">@Localizer["LabelFilterCounty"]</label>
+                <input name="county" type="text" class="form-control" value="@Model.ReportFilterViewModel.SelectedCounty">
+            </div>
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+            {
+                <div class="col">
+                    <label class="form-label">@Localizer["LabelFilterName"]</label>
+                    <input name="fullName" type="text" class="form-control" value="@Model.ReportFilterViewModel.SelectedFullName">
+                </div>
+            }            
+        </div>
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            <br />
+            <div class="form-check form-switch">
+                <label class="form-check-label">@Localizer["RadioButtonCreateFileLabel"]</label>
+                <input class="form-check-input" type="checkbox" value="1" name="createFile" />
+            </div>
+        }
+        <hr />
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">@SharedLocalizer["FilterButton"]</button>
+        </div>
+    </div>
+</form>
+<div class="table">
+    <table id="myTable" class="table table-bordered table-hover table-sm">
+        <thead>
+            <tr>
+                <th>@Localizer["ReportDateColum"]</th>
+                <th>@Localizer["ReportIdColum"]</th>
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                {
+                    <th>@Localizer["ReportUserIdColum"]</th>
+                    <th>@Localizer["FullNameColum"]</th>
+                }
+                <th>@Localizer["CountyColum"]</th>
+                <th>@Localizer["ViewDataColum"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    foreach (var Data in Model.Reports)
+                    {
+                        <tr>
+                            <td>@Data.ReportDate</td>
+                            <td>@Data.ReportId</td>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+                                <td>@Data.UserId</td>
+                                <td>@Data.FullName</td>
+                            }
+                            <td>@Data.County</td>
+                            <td>
+                                <button type="submit" class="btn btn-sm btn-primary" onclick="openModal({ url: '@Url.Action("GetReportCard", "ReportPanel")', data: @Data.ReportId})">
+                                    @Localizer["ShowDataColumButton"]
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="form-field">
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a class="btn btn-primary"
+       asp-action="UserManagement"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       role="button">
+            @Localizer["BackPageButton"]
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a class="btn btn-primary"
+       asp-action="UserManagement"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       role="button">
+            @Localizer["NextPageButton"]
+        </a>
+    }
+   
+</div>
+
+

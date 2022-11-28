@@ -5,9 +5,9 @@ namespace UI.Controllers
     public class AdminPanelController : Controller
     {
         private readonly IAdminPanelService _adminPanelService;
-        
 
-        public AdminPanelController([FromServices] IAdminPanelService adminServer ,IAccountService accountService)
+
+        public AdminPanelController([FromServices] IAdminPanelService adminServer, IAccountService accountService)
         {
             _adminPanelService = adminServer;
         }
@@ -49,9 +49,9 @@ namespace UI.Controllers
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
 
-            IndexViewModel viewModel = new IndexViewModel(items, pageViewModel, 
+            IndexViewModel viewModel = new IndexViewModel(items, pageViewModel,
                 new FilterUserMangeViewModels(roles, role.ToString(), email));
-            return View(viewModel);            
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -72,7 +72,7 @@ namespace UI.Controllers
             else if (User.IsInRole("Manager"))
                 response = await _adminPanelService.ManagerChangesRole(account);
 
-            if(response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
                 return RedirectToAction("UserManagement", "AdminPanel");
             }
@@ -89,7 +89,7 @@ namespace UI.Controllers
             return PartialView("GetDeleteUserCard", id);
         }
 
-        [HttpPost] 
+        [HttpPost]
         public async Task<IActionResult> DeleteUser(ulong id)
         {
             BaseResponse<bool> response = new BaseResponse<bool>();
@@ -105,7 +105,7 @@ namespace UI.Controllers
             else
                 ModelState.AddModelError("", response.Description);
             return View("Error", response.Description);
-            
+
         }
     }
 }

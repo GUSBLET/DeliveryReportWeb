@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-
 var builder = WebApplication.CreateBuilder(args);
 
 //Include Logger
@@ -18,7 +16,8 @@ builder.Services.AddLocalization(options =>
     options.ResourcesPath = "Resources";
 });
 builder.Services.AddControllersWithViews()
-        .AddDataAnnotationsLocalization(options => {
+        .AddDataAnnotationsLocalization(options =>
+        {
             options.DataAnnotationLocalizerProvider = (type, factory) =>
                 factory.Create(typeof(SharedResource));
         })

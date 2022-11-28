@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Net.WebSockets;
-
-namespace UI
+﻿namespace UI
 {
     public static class Initializer
     {

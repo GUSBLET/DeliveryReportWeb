@@ -1,6 +1,4 @@
-﻿using Models.Entities;
-
-namespace Models.ViewModels
+﻿namespace Models.ViewModels
 {
     public class UserManagementViewModels
     {

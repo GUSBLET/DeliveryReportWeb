@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using System.ComponentModel;
-
-namespace DataAccessLayer.EF
+﻿namespace DataAccessLayer.EF
 {
     public class ApplicationDbContext : DbContext
     {
@@ -11,7 +8,7 @@ namespace DataAccessLayer.EF
             Database.EnsureCreated();
         }
 
-        public DbSet<Account> TableUsers { get; set; } 
+        public DbSet<Account> TableUsers { get; set; }
 
         public DbSet<ReportOfDelivary> TableReports { get; set; }
 

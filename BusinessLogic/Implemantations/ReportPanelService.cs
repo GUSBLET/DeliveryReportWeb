@@ -1,4 +1,6 @@
-﻿namespace BusinessLogic.Implemantations
+﻿using OfficeOpenXml.Style;
+
+namespace BusinessLogic.Implemantations
 {
     public class ReportPanelService : IReportPanelService
     {
@@ -48,7 +50,80 @@
                     StatusCode = HttpStatusCode.InternalServerError,
                 };
             }
-            
+
+        }
+
+        public async Task<BaseResponse<CustomFile>> GenerateReportsFile(List<ControlReportViewModal> list, string language)
+        {
+            try
+            {
+                ExcelPackage.LicenseContext = LicenseContext.Commercial;
+                var package = new ExcelPackage();
+
+                var sheet = package.Workbook.Worksheets
+                    .Add("List Report");
+                if(language == "c=en-US|uic=en-US")
+                {
+                    sheet.Cells[1, 1, 1, 1].LoadFromArrays(new object[][] { new[] { "Report-Id", "User-Id", "County", "Full name",
+                                                                    "Date", "Distance passed", "Begin time", "End time", "Working time"} });
+                }
+                else if(language == "c=de-DE|uic=de-DE")
+                {
+                    sheet.Cells[1, 1, 1, 1].LoadFromArrays(new object[][] { new[] { "Berichts-ID", "User-Id", "Bezirk", "Vollständiger Name",
+                                                                    "Datum", "Strecke zurückgelegt", "Zeit beginnen", "Endzeit", "Arbeitszeit"} });
+                }
+                
+                var row = 2;
+                var column = 1;
+                //sheet.Cells[1, 1, row, column + 1].AutoFitColumns();
+                sheet.Column(1).Width = 20;
+                sheet.Column(2).Width = 20;
+                sheet.Column(3).Width = 45;
+                sheet.Column(4).Width = 20;
+                sheet.Column(5).Width = 20;
+                sheet.Column(6).Width = 20;
+                sheet.Column(7).Width = 20;
+                sheet.Column(8).Width = 20;
+                sheet.Column(9).Width = 20;
+                sheet.Cells[1, 1, 1 + list.Count , 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                sheet.Cells[1, 1, 1 + list.Count, 9].Style.Font.Bold = true;
+                sheet.Cells[1, 1, 1 + list.Count, 9].Style.Border.BorderAround(ExcelBorderStyle.Double);
+                sheet.Cells[1, 1, 1 + list.Count, 9].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                foreach (var item in list)
+                {
+                    int hour = item.WorkingTime.Hour;
+                    int minute = item.WorkingTime.Minute;
+                    sheet.Cells[row, column].Value = item.ReportId;
+                    sheet.Cells[row, column+1].Value =item.UserId;
+                    sheet.Cells[row, column+2].Value = item.County;
+                    sheet.Cells[row, column+3].Value = item.FullName;
+                    sheet.Cells[row, column+4].Value = item.ReportDate;
+                    sheet.Cells[row, column+5].Value = item.DistancePassed;
+                    sheet.Cells[row, column+6].Value = item.BeginTime;
+                    sheet.Cells[row, column+7].Value = item.EndTime;
+                    sheet.Cells[row, column+8].Value = $"{hour}:{minute}";
+                    row++;
+                }
+
+                var result = new CustomFile()
+                {
+                    FileContents = package.GetAsByteArray(),
+                    FileName = "Reports.xlsx",
+                    ContentType = "application/octet-stream"
+                };
+
+                //File.WriteAllBytes("Report.xlsx", package.GetAsByteArray());
+
+                return new BaseResponse<CustomFile>
+                {
+                    Data = result,
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<BaseResponse<List<ReportOfDelivary>>> SelectAllReportList()
@@ -112,19 +187,20 @@
                 return new BaseResponse<List<ReportOfDelivary>>
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                        Data = await (from p in _reportRepository.Select()
-                                    where p.UserId == id
-                                    select new ReportOfDelivary
-                                    {
-                                        Id = p.Id,
-                                        UserId = p.UserId,
-                                        County = p.County,
-                                        BeginTime = p.BeginTime,
-                                        EndTime = p.EndTime,
-                                        WorkingTime = p.WorkingTime,
-                                        ReportDate = p.ReportDate,
-                                        DistancePassed = p.DistancePassed
-                                    }).ToListAsync()
+                    Data = await (from p in _reportRepository.Select()
+                                  where p.UserId == id
+                                  select new ReportOfDelivary
+                                  {
+                                      Id = p.Id,
+                                      UserId = p.UserId,
+
+                                      County = p.County,
+                                      BeginTime = p.BeginTime,
+                                      EndTime = p.EndTime,
+                                      WorkingTime = p.WorkingTime,
+                                      ReportDate = p.ReportDate,
+                                      DistancePassed = p.DistancePassed
+                                  }).ToListAsync()
                 };
             }
             catch (Exception ex)

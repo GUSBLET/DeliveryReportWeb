@@ -1,5 +1,5 @@
-﻿using MimeKit;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace BusinessLogic.Implemantations
 {
@@ -10,7 +10,7 @@ namespace BusinessLogic.Implemantations
         private readonly string _token;
 
         public MailService(IConfiguration configuration, ILogger<MailService> logger)
-        {       
+        {
             _loger = logger;
             _token = configuration.GetValue<string>("TokenMailService");
         }
@@ -32,7 +32,7 @@ namespace BusinessLogic.Implemantations
                 await client.ConnectAsync("smtp.gmail.com", 465, true);
                 await client.AuthenticateAsync(_from, _token);
                 await client.SendAsync(emailMessage);
-                
+
                 await client.DisconnectAsync(true);
             }
         }

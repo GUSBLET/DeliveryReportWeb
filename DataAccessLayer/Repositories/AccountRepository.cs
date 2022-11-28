@@ -4,7 +4,7 @@
     {
         private readonly ApplicationDbContext _dataBase;
 
-        public AccountRepository(ApplicationDbContext context) =>  _dataBase = context;
+        public AccountRepository(ApplicationDbContext context) => _dataBase = context;
 
         public async Task<bool> Add(Account entity)
         {

@@ -1,5 +1,19 @@
 ﻿namespace Models.ViewModels
 {
+    public class ControlReportViewModal
+    {
+        public ulong Id { get; set; }
+        public ulong UserId { get; set; }
+        public ulong ReportId { get; set; }
+        public string County { get; set; }
+        public string FullName { get; set; }
+        public int DistancePassed { get; set; }
+        public DateOnly ReportDate { get; set; }
+        public TimeOnly BeginTime { get; set; }
+        public TimeOnly EndTime { get; set; }
+        public TimeOnly WorkingTime { get; set; }
+    }
+
     public class ReportViewDataViewModel
     {
         [DataType(DataType.Text)]
@@ -21,6 +35,16 @@
         [Display(Name = "EndTimeLabel")]
         [DataType(DataType.Time)]
         public TimeOnly EndTime { get; set; }
+
+        [Display(Name = "FullNameLabel")]
+        [DataType(DataType.Text)]
+        public string FullName { get; set; }
+
+        [Display(Name = "UserIdLabel")]
+        public ulong UserId { get; set; }
+
+        [Display(Name = "ReportIdLabel")]
+        public ulong ReportId { get; set; }
     }
 
     public class CreateReportViewModel
@@ -62,13 +86,29 @@
         public PageViewModel PageViewModel { get; }
         public ReportFilterUserMangeViewModel DelivarymanReportFilterViewModel { get; }
         public ViewReportsViewModel(
-            IEnumerable<ReportOfDelivary> reports, 
+            IEnumerable<ReportOfDelivary> reports,
             PageViewModel viewModel,
             ReportFilterUserMangeViewModel mangeViewModels)
         {
             Reports = reports;
             PageViewModel = viewModel;
             DelivarymanReportFilterViewModel = mangeViewModels;
+        }
+    }
+
+    public class ControlViewReportsViewModel
+    {
+        public IEnumerable<ControlReportViewModal> Reports { get; }
+        public PageViewModel PageViewModel { get; }
+        public ReportFilterUserMangeViewModel ReportFilterViewModel { get; }
+        public ControlViewReportsViewModel(
+            IEnumerable<ControlReportViewModal> reports,
+            PageViewModel viewModel,
+            ReportFilterUserMangeViewModel mangeViewModels)
+        {
+            Reports = reports;
+            PageViewModel = viewModel;
+            ReportFilterViewModel = mangeViewModels;
         }
     }
 }

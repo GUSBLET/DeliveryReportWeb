@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace Models.Entities
+﻿namespace Models.Entities
 {
     public class Account
     {

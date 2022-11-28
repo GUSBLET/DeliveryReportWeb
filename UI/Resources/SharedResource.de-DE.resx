@@ -1,101 +1,281 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
-		Microsoft ResX Schema
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
 
-		Version 1.3
-
-		The primary goals of this format is to allow a simple XML format 
-		that is mostly human readable. The generation and parsing of the 
-		various data types are done through the TypeConverter classes 
-		associated with the data types.
-
-		Example:
-
-		... ado.net/XML headers & schema ...
-		<resheader name="resmimetype">text/microsoft-resx</resheader>
-		<resheader name="version">1.3</resheader>
-		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-		<data name="Name1">this is my long string</data>
-		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-			[base64 mime encoded serialized .NET Framework object]
-		</data>
-		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-			[base64 mime encoded string representing a byte array form of the .NET Framework object]
-		</data>
-
-		There are any number of "resheader" rows that contain simple 
-		name/value pairs.
-
-		Each data row contains a name, and value. The row also contains a 
-		type or mimetype. Type corresponds to a .NET class that support 
-		text/value conversion through the TypeConverter architecture. 
-		Classes that don't support this are serialized and stored with the 
-		mimetype set.
-
-		The mimetype is used for serialized objects, and tells the 
-		ResXResourceReader how to depersist the object. This is currently not 
-		extensible. For a given mimetype the value must be set accordingly:
-
-		Note - application/x-microsoft.net.object.binary.base64 is the format 
-		that the ResXResourceWriter will generate, however the reader can 
-		read any of the formats listed below.
-
-		mimetype: application/x-microsoft.net.object.binary.base64
-		value   : The object must be serialized with 
-			: System.Serialization.Formatters.Binary.BinaryFormatter
-			: and then encoded with base64 encoding.
-
-		mimetype: application/x-microsoft.net.object.soap.base64
-		value   : The object must be serialized with 
-			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-			: and then encoded with base64 encoding.
-
-		mimetype: application/x-microsoft.net.object.bytearray.base64
-		value   : The object must be serialized into a byte array 
-			: using a System.ComponentModel.TypeConverter
-			: and then encoded with base64 encoding.
-	-->
-	
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>1.3</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccessDeniedError" xml:space="preserve">
+    <value>Zugriff abgelehnt</value>
+  </data>
+  <data name="BeginTimeLabel" xml:space="preserve">
+    <value>Beginnzeit:</value>
+  </data>
+  <data name="CheckEmailForResetPasswordMessage" xml:space="preserve">
+    <value>Bitte überprüfen Sie Ihre E-Mails, um Ihr Passwort zurückzusetzen.</value>
+    <comment>Body of information message</comment>
+  </data>
+  <data name="CountyLabel" xml:space="preserve">
+    <value>Bezirk:</value>
+  </data>
+  <data name="DistancePassedLabel" xml:space="preserve">
+    <value>Zurückgelegte Distanz in Metern:</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>Geben sie ihre E-Mail Adresse ein:</value>
+  </data>
+  <data name="EndTimeLabel" xml:space="preserve">
+    <value>Endzeit:</value>
+  </data>
+  <data name="ErrorHeaderOfMessage" xml:space="preserve">
+    <value>Fehler</value>
+    <comment>Title of information message</comment>
+  </data>
+  <data name="ErrorPasswordCompare" xml:space="preserve">
+    <value>Passwörter stimmen nicht überein</value>
+  </data>
+  <data name="FieldEmailErrorRequired" xml:space="preserve">
+    <value>E-Mail-Feld muss erforderlich sein</value>
+  </data>
+  <data name="FieldErrorRequired" xml:space="preserve">
+    <value>Feld muss erforderlich sein</value>
+  </data>
+  <data name="FieldLastNameErrorRequired" xml:space="preserve">
+    <value>Das Nachnamenfeld muss ausgefüllt werden</value>
+  </data>
+  <data name="FieldNameErrorRequired" xml:space="preserve">
+    <value>Das Namensfeld muss ausgefüllt werden</value>
+  </data>
+  <data name="FieldPasswordConfirmErrorRequired" xml:space="preserve">
+    <value>Das Feld zur Bestätigung des Passworts muss erforderlich sein</value>
+  </data>
+  <data name="FieldPasswordErrorRequired" xml:space="preserve">
+    <value>Passwortfeld muss erforderlich sein</value>
+  </data>
+  <data name="FieldPhoneNumberErrorRequired" xml:space="preserve">
+    <value>Das Telefonnummernfeld muss ausgefüllt werden</value>
+  </data>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="FullNameLabel" xml:space="preserve">
+    <value>Vollständiger Name:</value>
+  </data>
+  <data name="LastNameLabel" xml:space="preserve">
+    <value>Geben Sie Ihren Nachnamen ein:</value>
+  </data>
+  <data name="ModalWindowLabelInformation" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Gib deinen Namen ein:</value>
+  </data>
+  <data name="NavBarAdminPanelDropDown" xml:space="preserve">
+    <value>Administrationsmenü</value>
+  </data>
+  <data name="NavBarAdminPanelDropDownButtonCheckReport" xml:space="preserve">
+    <value>Bericht prüfen</value>
+  </data>
+  <data name="NavBarAdminPanelDropDownButtonUserManagement" xml:space="preserve">
+    <value>Benutzerverwaltung</value>
+  </data>
+  <data name="NavBarCreateReportButton" xml:space="preserve">
+    <value>Bericht erstellen</value>
+    <comment>Name for navbar</comment>
+  </data>
+  <data name="NavBarLoginButton" xml:space="preserve">
+    <value>Loggen</value>
+  </data>
+  <data name="NavBarLogoutButton" xml:space="preserve">
+    <value>Ausloggen</value>
+  </data>
+  <data name="NavBarProfileButton" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="NavBarRegistretionButton" xml:space="preserve">
+    <value>Anmeldung</value>
+  </data>
+  <data name="NavBarReportPanelDropDown" xml:space="preserve">
+    <value>Berichtsfeld</value>
+    <comment>Name for navbar</comment>
+  </data>
+  <data name="NavBarViewingReportsPanelButton" xml:space="preserve">
+    <value>Ihre Berichte</value>
+    <comment>Name for navbar</comment>
+  </data>
+  <data name="PasswordChangedMessage" xml:space="preserve">
+    <value>Passwort geändert.</value>
+    <comment>Body of information message</comment>
+  </data>
+  <data name="PasswordConfirmLabel" xml:space="preserve">
+    <value>Bestätigen Sie Ihr Passwort:</value>
+  </data>
+  <data name="PasswordLabel" xml:space="preserve">
+    <value>Passwort:</value>
+  </data>
+  <data name="PhoneNumberLabel" xml:space="preserve">
+    <value>Trage deine Telefonnummer ein:</value>
+  </data>
+  <data name="ReportCreatedMessage" xml:space="preserve">
+    <value>Bericht erfolgreich erstellt</value>
+    <comment>Body of information message</comment>
+  </data>
+  <data name="ReportDateLabel" xml:space="preserve">
+    <value>Berichtsdatum:</value>
+  </data>
+  <data name="ReportDidNotCreatMessage" xml:space="preserve">
+    <value>Bericht wurde nicht erstellt</value>
+    <comment>Body of information message</comment>
+  </data>
+  <data name="ReportIdLabel" xml:space="preserve">
+    <value>Berichts-ID:</value>
+  </data>
+  <data name="SubmitButtonInForm" xml:space="preserve">
+    <value>Einreichen</value>
+  </data>
+  <data name="SuccessfullyHeaderOfMessage" xml:space="preserve">
+    <value>Erfolg</value>
+    <comment>Title of information message</comment>
+  </data>
+  <data name="SuccessRegistrationMessge" xml:space="preserve">
+    <value>Bitte überprüfen Sie Ihre E-Mail auf die Bestätigungsaktion.</value>
+    <comment>Body of information message</comment>
+  </data>
+  <data name="UserCardEmailLabel" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="UserCardLastNameLabel" xml:space="preserve">
+    <value>Nachname</value>
+  </data>
+  <data name="UserCardNameLabel" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="UserCardPhoneNumberLabel" xml:space="preserve">
+    <value>Telefonnummer</value>
+  </data>
+  <data name="UserCardRoleLabel" xml:space="preserve">
+    <value>Rolle</value>
+  </data>
+  <data name="UserDosen'tExistMessage" xml:space="preserve">
+    <value>Benutzer existiert nicht</value>
+    <comment>Body of information message</comment>
+  </data>
+  <data name="UserIdLabel" xml:space="preserve">
+    <value>Benutzeridentifikation:</value>
+  </data>
+  <data name="WorkingTimeLabel" xml:space="preserve">
+    <value>Arbeitszeit:</value>
+  </data>
 </root>
