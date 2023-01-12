@@ -4,8 +4,8 @@
 <form method="post" asp-action="DeleteUser" asp-controller="AdminPanel">
     <p>Are you sure you want to delete?</p>
     <input name="id" value="@Model" hidden/>
-    <button type="submit" class="btn btn-success">Yes,Delete</button>
-    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+    <button type="submit" class="btn btn-success">@SharedLocalizer["ConfirmModalWindowDelete"]</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["CancelModalWindowDelete"]</button>
 </form>
         
 

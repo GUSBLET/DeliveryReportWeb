@@ -123,9 +123,15 @@
   <data name="BeginTimeLabel" xml:space="preserve">
     <value>Beginnzeit:</value>
   </data>
+  <data name="CancelModalWindowDelete" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
   <data name="CheckEmailForResetPasswordMessage" xml:space="preserve">
     <value>Bitte überprüfen Sie Ihre E-Mails, um Ihr Passwort zurückzusetzen.</value>
     <comment>Body of information message</comment>
+  </data>
+  <data name="ConfirmModalWindowDelete" xml:space="preserve">
+    <value>Ja, löschen</value>
   </data>
   <data name="CountyLabel" xml:space="preserve">
     <value>Bezirk:</value>
@@ -241,6 +247,9 @@
   </data>
   <data name="ReportIdLabel" xml:space="preserve">
     <value>Berichts-ID:</value>
+  </data>
+  <data name="SendChangesModalWindow" xml:space="preserve">
+    <value>Änderungen senden</value>
   </data>
   <data name="SubmitButtonInForm" xml:space="preserve">
     <value>Einreichen</value>
