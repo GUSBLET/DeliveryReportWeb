@@ -1,4 +1,10 @@
 ﻿
+using Azure;
+using Microsoft.Net.Http.Headers;
+using Models.Helpers;
+using System.Collections.Specialized;
+using System.Security.Claims;
+
 namespace UI.Controllers
 {
     public class AccountController : Controller
@@ -44,6 +50,85 @@ namespace UI.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult EditEmail()
+        {
+            // we create model for view
+            var result = new EditEmailRequestViewModel
+            {
+                Email = User.Identity.Name ?? string.Empty
+            };
+
+            return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditEmail(EditEmailRequestViewModel model)
+        {
+            if(!ModelState.IsValid)
+                return View(model);
+            
+            var response = _accountService.GetUserByEmail(model.Email);
+            if(response.Result.Data.Password == HashPasswordHelper.HashPassowrd(model.Password))
+                return RedirectToAction("ContinueEditEmail");
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ContinueEditEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ContinueEditEmail(EditEmailContinueViewModel model)
+        {
+            if(!ModelState.IsValid)
+                return View(model);
+
+            if(_accountService.GetUserByEmail(model.NewEmail).Result.Data != null)
+            {
+                ModelState.AddModelError("", "Email Address Exist");
+            }
+                
+            var user = _accountService.GetUserByEmail(User.Identity.Name ?? string.Empty);
+            if (user.Result.Data == null)
+            {
+                ModelState.AddModelError("", user.Result.Description);
+                return View(model);
+            }
+
+            string emailConfirmationUrl = "Click here for edit your email address: " + Url.Action(
+                    "CompleteEditEmail",
+                    "Account",
+                    new { userId = user.Result.Data.Id, code = user.Result.Data.EmailConfirmedToken.ToString(), email = model.NewEmail.ToString() },
+                    protocol: HttpContext.Request.Scheme);
+            _mailService.SendEmailAsync(model.NewEmail, "Edit your email", emailConfirmationUrl);
+
+            return View("Success", "CheckEmailForEditEmailMessage");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CompleteEditEmail(string userId, string code, string email)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+            var user = await _accountService.GetUserById(Convert.ToUInt64(userId));
+            if (user.Data == null || user.Data.EmailConfirmedToken.ToString() != code)
+            {
+                return View("Error", "User don't exist");
+            }
+            
+            var result = _accountService.ChangeEmail(email, Convert.ToUInt64(userId));
+
+            if (result.Result)
+                return RedirectToAction("Logout", "Account");
+            else
+                return View("Error", "Error");
+        }
 
         [HttpGet]
         public IActionResult Login()
@@ -88,7 +173,6 @@ namespace UI.Controllers
                     return View(model);
                 }
 
-
                 string emailConfirmationUrl = Url.Action(
                     "ResetPassword",
                     "Account",
@@ -102,7 +186,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        public IActionResult ResetPassword(ulong userId, string code)
+        public IActionResult ResetPassword(ulong userId)
         {
             ViewBag.Id = userId;
             return View();

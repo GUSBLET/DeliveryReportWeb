@@ -126,6 +126,9 @@
   <data name="CancelModalWindowDelete" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
+  <data name="CheckEmailForEditEmailMessage" xml:space="preserve">
+    <value>Überprüfen Sie Ihre E-Mail, um die E-Mail zu bearbeiten</value>
+  </data>
   <data name="CheckEmailForResetPasswordMessage" xml:space="preserve">
     <value>Bitte überprüfen Sie Ihre E-Mails, um Ihr Passwort zurückzusetzen.</value>
     <comment>Body of information message</comment>
@@ -163,6 +166,9 @@
   </data>
   <data name="FieldNameErrorRequired" xml:space="preserve">
     <value>Das Namensfeld muss ausgefüllt werden</value>
+  </data>
+  <data name="FieldNewEmailErrorRequired" xml:space="preserve">
+    <value>Dieses Feld muss erforderlich sein oder der Benutzer existiert bereits</value>
   </data>
   <data name="FieldPasswordConfirmErrorRequired" xml:space="preserve">
     <value>Das Feld zur Bestätigung des Passworts muss erforderlich sein</value>

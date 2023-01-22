@@ -1,5 +1,26 @@
 ﻿namespace Models.ViewModels
 {
+    public class EditEmailContinueViewModel
+    {
+        [Required(ErrorMessage = "FieldNewEmailErrorRequired")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "EmailLabel")]
+        public string NewEmail { get; set; }
+    }
+
+    public class EditEmailRequestViewModel
+    {
+        [Required(ErrorMessage = "FieldEmailErrorRequired")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "EmailLabel")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "FieldPasswordErrorRequired")]
+        [DataType(DataType.Password)]
+        [Display(Name = "PasswordLabel")]
+        public string Password { get; set; }
+    }
+
     public class ChangeUserViewModel
     {
         [Required(ErrorMessage = "FieldEmailErrorRequired")]

@@ -1,0 +1,17 @@
+﻿@model Models.ViewModels.EditEmailContinueViewModel
+@{
+    ViewBag.TitlePage = Localizer["TitlePage"];
+}
+
+@using (Html.BeginForm("ContinueEditEmail", "Account", FormMethod.Post))
+{
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-field">
+        <label asp-for="NewEmail" for="exampleInputEmail1" class="form-label"></label>
+        <input asp-for="NewEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    </div>
+    <div class="form-field">
+        <button type="submit" class="btn btn-primary">@SharedLocalizer["SubmitButtonInForm"]</button>
+    </div>
+}

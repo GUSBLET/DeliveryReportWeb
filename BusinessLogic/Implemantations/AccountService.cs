@@ -11,6 +11,18 @@
             _userRepository = userRepository;
         }
 
+        public async Task<bool> ChangeEmail(string email, ulong id)
+        {
+            var model = await GetUserById(id);
+            if (model.Data == null)
+                return false;
+
+            model.Data.Email = email;
+            await _userRepository.Update(model.Data);
+
+            return true;
+        }
+
         public async Task<BaseResponse<bool>> ConfirmEmailAsync(ulong id, string key)
         {
             try
@@ -47,6 +59,7 @@
                 };
             }
         }
+
 
         public async Task<BaseResponse<Account>> GetUserByEmail(string email)
         {

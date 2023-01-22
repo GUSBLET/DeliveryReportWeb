@@ -120,6 +120,9 @@
   <data name="ChangeProfile" xml:space="preserve">
     <value>Profil bearbeiten</value>
   </data>
+  <data name="EditEmailRequistAction" xml:space="preserve">
+    <value>E-Mail bearbeiten</value>
+  </data>
   <data name="FieldEmail" xml:space="preserve">
     <value>Email:</value>
   </data>

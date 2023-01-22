@@ -32,6 +32,10 @@
                                     <li><a href="#!"><i class="ti-instagram"></i></a></li>
                                 </ul>
                                 
+                                <input class="btn btn-primary"
+                                       type="submit"
+                                       value="@Localizer["EditEmailRequistAction"]"
+                                       onclick="@("window.location.href='" + @Url.Action("EditEmail", "Account") + "'");" />
                                 <input class="btn btn-primary" 
                                         type="submit"
                                         value="@Localizer["ResetPasswordRequistAction"]"
